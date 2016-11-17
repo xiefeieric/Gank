@@ -25,24 +25,24 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    //log
+    //annotation
+    //rx
+    //network
+    //image
+    //memory leak
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'
-    testCompile 'junit:junit:4.12'
-    //log
     compile 'com.jakewharton.timber:timber:4.3.1'
-    //annotation
     compile 'com.jakewharton:butterknife:8.4.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
-    //rx
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.2.2'
-    //network
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    //image
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.android.support:support-v4:24.1.0'
-    //memory leak
+    compile 'com.android.support:support-v4:24.2.1'
+    testCompile 'junit:junit:4.12'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 }
