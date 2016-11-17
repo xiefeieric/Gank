@@ -1,5 +1,6 @@
-package uk.me.feixie.gank.data;
+package uk.me.feixie.gank.data.local;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -7,7 +8,7 @@ import io.realm.annotations.PrimaryKey;
  * Created by Fei on 16/11/2016.
  */
 
-public class ModelArticle extends RealmObject {
+public class ModelArticleRealm extends RealmObject {
 
     @PrimaryKey
     public String id;
@@ -19,6 +20,6 @@ public class ModelArticle extends RealmObject {
     public String url;
     public boolean used;
     public String author;
-    public String imagePath;
+    public RealmList<RealmString> imagePaths;
 
 }

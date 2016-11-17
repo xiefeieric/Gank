@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
-import uk.me.feixie.gank.data.ModelArticle;
+import uk.me.feixie.gank.data.local.ModelArticleRealm;
 import uk.me.feixie.gank.framework.BasePresenter;
 import uk.me.feixie.gank.framework.BaseView;
 
@@ -18,7 +18,7 @@ public interface TodayContract {
 
         void setLoadingIndicator(boolean active);
 
-        void showArticles(List<ModelArticle> articles);
+        void showArticles(List<ModelArticleRealm> articles);
 
         void showArticleDetailUi(@NonNull String articleId);
 
@@ -32,7 +32,7 @@ public interface TodayContract {
 
         void loadArticles();
 
-        void loadArticalDetails(@NonNull ModelArticle article);
+        void loadArticalDetails(@NonNull ModelArticleRealm article);
 
         void result(int requestCode, int resultCode);
     }

@@ -4,6 +4,10 @@ import android.app.Application;
 
 import com.squareup.leakcanary.LeakCanary;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import timber.log.Timber;
 import uk.me.feixie.gank.BuildConfig;
 
@@ -27,5 +31,11 @@ public class GankApplication extends Application {
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
+
+        JodaTimeAndroid.init(this);
+
+        Realm.init(this);
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
+        Realm.setDefaultConfiguration(realmConfiguration);
     }
 }

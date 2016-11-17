@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import uk.me.feixie.gank.R;
-import uk.me.feixie.gank.data.ModelArticle;
+import uk.me.feixie.gank.data.local.ModelArticleRealm;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,6 +33,7 @@ public class TodayFragment extends Fragment implements TodayContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPresenter.loadArticles();
     }
 
     @Override
@@ -60,7 +61,7 @@ public class TodayFragment extends Fragment implements TodayContract.View {
     }
 
     @Override
-    public void showArticles(List<ModelArticle> articles) {
+    public void showArticles(List<ModelArticleRealm> articles) {
 
     }
 

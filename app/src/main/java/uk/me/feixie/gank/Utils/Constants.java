@@ -6,6 +6,8 @@ package uk.me.feixie.gank.Utils;
 
 public class Constants {
 
+    public static final String BASE_URL = "http://gank.io/api/";
+
     public static final String FRAGMENT_TODAY = "fragment_today";
 
 }
