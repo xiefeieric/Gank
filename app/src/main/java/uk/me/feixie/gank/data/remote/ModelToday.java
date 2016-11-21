@@ -2,12 +2,14 @@ package uk.me.feixie.gank.data.remote;
 
 import java.util.List;
 
+import io.realm.Realm;
+import uk.me.feixie.gank.data.local.ModelArticleRealm;
+
 /**
  * Created by Fei on 17/11/2016.
  */
 
 public class ModelToday {
-
 
     /**
      * category : ["Android","休息视频","福利","iOS"]
@@ -53,6 +55,32 @@ public class ModelToday {
             public String who;
             public List<String> images;
 
+            public void toRealmItemAndroid(AndroidBean android, Realm realm) {
+                ModelArticleRealm androidRealm = realm.where(ModelArticleRealm.class).equalTo("id", android._id).findFirst();
+                if (androidRealm == null) {
+                    androidRealm = new ModelArticleRealm();
+                    androidRealm.id = android._id;
+                }
+                androidRealm.creatAt = android.createdAt;
+                androidRealm.desc = android.desc;
+                androidRealm.publishedAt = android.publishedAt;
+                androidRealm.source = android.source;
+                androidRealm.type = android.type;
+                androidRealm.url = android.url;
+                androidRealm.used = android.used;
+                androidRealm.author = android.who;
+                if (android.images != null && android.images.size() > 0) {
+                    androidRealm.imagePath = android.images.get(0);
+                }
+                final ModelArticleRealm finalAndroidRealm = androidRealm;
+                realm.executeTransactionAsync(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        realm.copyToRealmOrUpdate(finalAndroidRealm);
+                    }
+                });
+            }
+
         }
 
         public class IOSBean {
@@ -79,6 +107,32 @@ public class ModelToday {
             public boolean used;
             public String who;
             public List<String> images;
+
+            public void toRealmItemIos(IOSBean ios, Realm realm) {
+                ModelArticleRealm iosRealm = realm.where(ModelArticleRealm.class).equalTo("id", ios._id).findFirst();
+                if (iosRealm == null) {
+                    iosRealm = new ModelArticleRealm();
+                    iosRealm.id = ios._id;
+                }
+                iosRealm.creatAt = ios.createdAt;
+                iosRealm.desc = ios.desc;
+                iosRealm.publishedAt = ios.publishedAt;
+                iosRealm.source = ios.source;
+                iosRealm.type = ios.type;
+                iosRealm.url = ios.url;
+                iosRealm.used = ios.used;
+                iosRealm.author = ios.who;
+                if (ios.images != null && ios.images.size() > 0) {
+                    iosRealm.imagePath = ios.images.get(0);
+                }
+                final ModelArticleRealm finalIosRealm = iosRealm;
+                realm.executeTransactionAsync(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        realm.copyToRealmOrUpdate(finalIosRealm);
+                    }
+                });
+            }
         }
 
         public class 休息视频Bean {
@@ -103,6 +157,30 @@ public class ModelToday {
             public String url;
             public boolean used;
             public String who;
+
+            public void toRealmItemLeisure(休息视频Bean leisure, Realm realm) {
+                ModelArticleRealm leisureRealm = realm.where(ModelArticleRealm.class).equalTo("id", leisure._id).findFirst();
+                if (leisureRealm == null) {
+                    leisureRealm = new ModelArticleRealm();
+                    leisureRealm.id = leisure._id;
+                }
+                leisureRealm.creatAt = leisure.createdAt;
+                leisureRealm.desc = leisure.desc;
+                leisureRealm.publishedAt = leisure.publishedAt;
+                leisureRealm.source = leisure.source;
+                leisureRealm.type = leisure.type;
+                leisureRealm.url = leisure.url;
+                leisureRealm.used = leisure.used;
+                leisureRealm.author = leisure.who;
+
+                final ModelArticleRealm finalLeisureRealm = leisureRealm;
+                realm.executeTransactionAsync(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        realm.copyToRealmOrUpdate(finalLeisureRealm);
+                    }
+                });
+            }
         }
 
         public class 福利Bean {
@@ -127,6 +205,30 @@ public class ModelToday {
             public String url;
             public boolean used;
             public String who;
+
+            public void toRealmItemGift(福利Bean gift, Realm realm) {
+                ModelArticleRealm giftRealm = realm.where(ModelArticleRealm.class).equalTo("id", gift._id).findFirst();
+                if (giftRealm == null) {
+                    giftRealm = new ModelArticleRealm();
+                    giftRealm.id = gift._id;
+                }
+                giftRealm.creatAt = gift.createdAt;
+                giftRealm.desc = gift.desc;
+                giftRealm.publishedAt = gift.publishedAt;
+                giftRealm.source = gift.source;
+                giftRealm.type = gift.type;
+                giftRealm.url = gift.url;
+                giftRealm.used = gift.used;
+                giftRealm.author = gift.who;
+
+                final ModelArticleRealm finalGiftRealm = giftRealm;
+                realm.executeTransactionAsync(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        realm.copyToRealmOrUpdate(finalGiftRealm);
+                    }
+                });
+            }
         }
     }
 }

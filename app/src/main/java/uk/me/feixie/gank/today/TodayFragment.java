@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import io.realm.Realm;
+import timber.log.Timber;
 import uk.me.feixie.gank.R;
 import uk.me.feixie.gank.data.local.ModelArticleRealm;
 
@@ -21,6 +23,7 @@ public class TodayFragment extends Fragment implements TodayContract.View {
 
 
     private TodayContract.Presenter mPresenter;
+    private Realm mRealm;
 
     public TodayFragment() {
         // Required empty public constructor
@@ -33,7 +36,8 @@ public class TodayFragment extends Fragment implements TodayContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter.loadArticles();
+        mRealm = Realm.getDefaultInstance();
+        mPresenter.loadArticles(mRealm);
     }
 
     @Override
@@ -52,7 +56,15 @@ public class TodayFragment extends Fragment implements TodayContract.View {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        int size = mRealm.where(ModelArticleRealm.class).findAll().size();
+        Timber.d("data size: %d", size);
         return inflater.inflate(R.layout.fragment_today, container, false);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mRealm.close();
     }
 
     @Override

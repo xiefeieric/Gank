@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import io.realm.Realm;
 import uk.me.feixie.gank.data.local.ModelArticleRealm;
 import uk.me.feixie.gank.framework.BasePresenter;
 import uk.me.feixie.gank.framework.BaseView;
@@ -30,7 +31,7 @@ public interface TodayContract {
 
     interface Presenter extends BasePresenter {
 
-        void loadArticles();
+        void loadArticles(Realm realm);
 
         void loadArticalDetails(@NonNull ModelArticleRealm article);
 
