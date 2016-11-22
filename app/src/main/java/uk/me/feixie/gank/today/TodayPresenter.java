@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import org.joda.time.DateTime;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -42,6 +43,9 @@ public class TodayPresenter implements TodayContract.Presenter {
                     @Override
                     public void onCompleted() {
                         Timber.d("onCompleted");
+                        RealmResults<ModelArticleRealm> allArticles = realm.where(ModelArticleRealm.class).findAll();
+                        Timber.d("all articles: %d", allArticles.size());
+                        mView.showArticles(allArticles);
                     }
 
                     @Override
@@ -64,6 +68,7 @@ public class TodayPresenter implements TodayContract.Presenter {
                         for (ModelToday.ResultsBean.福利Bean gift : modelToday.results.福利) {
                             gift.toRealmItemGift(gift, realm);
                         }
+
                     }
                 });
         mSubscription.add(subscription);

@@ -5,12 +5,18 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import io.realm.Realm;
 import timber.log.Timber;
 import uk.me.feixie.gank.R;
@@ -22,8 +28,11 @@ import uk.me.feixie.gank.data.local.ModelArticleRealm;
 public class TodayFragment extends Fragment implements TodayContract.View {
 
 
+    @BindView(R.id.rvToday)
+    UltimateRecyclerView mRvToday;
     private TodayContract.Presenter mPresenter;
     private Realm mRealm;
+    private Unbinder mBind;
 
     public TodayFragment() {
         // Required empty public constructor
@@ -58,7 +67,15 @@ public class TodayFragment extends Fragment implements TodayContract.View {
         // Inflate the layout for this fragment
         int size = mRealm.where(ModelArticleRealm.class).findAll().size();
         Timber.d("data size: %d", size);
-        return inflater.inflate(R.layout.fragment_today, container, false);
+        View view = inflater.inflate(R.layout.fragment_today, container, false);
+        mBind = ButterKnife.bind(this, view);
+        return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mBind.unbind();
     }
 
     @Override
@@ -74,7 +91,11 @@ public class TodayFragment extends Fragment implements TodayContract.View {
 
     @Override
     public void showArticles(List<ModelArticleRealm> articles) {
-
+        mRvToday.setHasFixedSize(true);
+        mRvToday.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRvToday.setEmptyView(R.layout.view_empty, 0);
+        TodayAdapter adapter = new TodayAdapter(articles);
+        mRvToday.setAdapter(adapter);
     }
 
     @Override

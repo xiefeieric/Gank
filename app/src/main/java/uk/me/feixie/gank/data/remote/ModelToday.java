@@ -55,28 +55,28 @@ public class ModelToday {
             public String who;
             public List<String> images;
 
-            public void toRealmItemAndroid(AndroidBean android, Realm realm) {
-                ModelArticleRealm androidRealm = realm.where(ModelArticleRealm.class).equalTo("id", android._id).findFirst();
-                if (androidRealm == null) {
-                    androidRealm = new ModelArticleRealm();
-                    androidRealm.id = android._id;
-                }
-                androidRealm.creatAt = android.createdAt;
-                androidRealm.desc = android.desc;
-                androidRealm.publishedAt = android.publishedAt;
-                androidRealm.source = android.source;
-                androidRealm.type = android.type;
-                androidRealm.url = android.url;
-                androidRealm.used = android.used;
-                androidRealm.author = android.who;
-                if (android.images != null && android.images.size() > 0) {
-                    androidRealm.imagePath = android.images.get(0);
-                }
-                final ModelArticleRealm finalAndroidRealm = androidRealm;
+            public void toRealmItemAndroid(final AndroidBean android, Realm realm) {
+
                 realm.executeTransactionAsync(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        realm.copyToRealmOrUpdate(finalAndroidRealm);
+                        ModelArticleRealm androidRealm = realm.where(ModelArticleRealm.class).equalTo("id", android._id).findFirst();
+                        if (androidRealm == null) {
+                            androidRealm = new ModelArticleRealm();
+                            androidRealm.id = android._id;
+                        }
+                        androidRealm.creatAt = android.createdAt;
+                        androidRealm.desc = android.desc;
+                        androidRealm.publishedAt = android.publishedAt;
+                        androidRealm.source = android.source;
+                        androidRealm.type = android.type;
+                        androidRealm.url = android.url;
+                        androidRealm.used = android.used;
+                        androidRealm.author = android.who;
+                        if (android.images != null && android.images.size() > 0) {
+                            androidRealm.imagePath = android.images.get(0);
+                        }
+                        realm.copyToRealmOrUpdate(androidRealm);
                     }
                 });
             }
@@ -108,28 +108,28 @@ public class ModelToday {
             public String who;
             public List<String> images;
 
-            public void toRealmItemIos(IOSBean ios, Realm realm) {
-                ModelArticleRealm iosRealm = realm.where(ModelArticleRealm.class).equalTo("id", ios._id).findFirst();
-                if (iosRealm == null) {
-                    iosRealm = new ModelArticleRealm();
-                    iosRealm.id = ios._id;
-                }
-                iosRealm.creatAt = ios.createdAt;
-                iosRealm.desc = ios.desc;
-                iosRealm.publishedAt = ios.publishedAt;
-                iosRealm.source = ios.source;
-                iosRealm.type = ios.type;
-                iosRealm.url = ios.url;
-                iosRealm.used = ios.used;
-                iosRealm.author = ios.who;
-                if (ios.images != null && ios.images.size() > 0) {
-                    iosRealm.imagePath = ios.images.get(0);
-                }
-                final ModelArticleRealm finalIosRealm = iosRealm;
+            public void toRealmItemIos(final IOSBean ios, Realm realm) {
+
                 realm.executeTransactionAsync(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        realm.copyToRealmOrUpdate(finalIosRealm);
+                        ModelArticleRealm iosRealm = realm.where(ModelArticleRealm.class).equalTo("id", ios._id).findFirst();
+                        if (iosRealm == null) {
+                            iosRealm = new ModelArticleRealm();
+                            iosRealm.id = ios._id;
+                        }
+                        iosRealm.creatAt = ios.createdAt;
+                        iosRealm.desc = ios.desc;
+                        iosRealm.publishedAt = ios.publishedAt;
+                        iosRealm.source = ios.source;
+                        iosRealm.type = ios.type;
+                        iosRealm.url = ios.url;
+                        iosRealm.used = ios.used;
+                        iosRealm.author = ios.who;
+                        if (ios.images != null && ios.images.size() > 0) {
+                            iosRealm.imagePath = ios.images.get(0);
+                        }
+                        realm.copyToRealmOrUpdate(iosRealm);
                     }
                 });
             }
@@ -158,26 +158,25 @@ public class ModelToday {
             public boolean used;
             public String who;
 
-            public void toRealmItemLeisure(休息视频Bean leisure, Realm realm) {
-                ModelArticleRealm leisureRealm = realm.where(ModelArticleRealm.class).equalTo("id", leisure._id).findFirst();
-                if (leisureRealm == null) {
-                    leisureRealm = new ModelArticleRealm();
-                    leisureRealm.id = leisure._id;
-                }
-                leisureRealm.creatAt = leisure.createdAt;
-                leisureRealm.desc = leisure.desc;
-                leisureRealm.publishedAt = leisure.publishedAt;
-                leisureRealm.source = leisure.source;
-                leisureRealm.type = leisure.type;
-                leisureRealm.url = leisure.url;
-                leisureRealm.used = leisure.used;
-                leisureRealm.author = leisure.who;
+            public void toRealmItemLeisure(final 休息视频Bean leisure, Realm realm) {
 
-                final ModelArticleRealm finalLeisureRealm = leisureRealm;
                 realm.executeTransactionAsync(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        realm.copyToRealmOrUpdate(finalLeisureRealm);
+                        ModelArticleRealm leisureRealm = realm.where(ModelArticleRealm.class).equalTo("id", leisure._id).findFirst();
+                        if (leisureRealm == null) {
+                            leisureRealm = new ModelArticleRealm();
+                            leisureRealm.id = leisure._id;
+                        }
+                        leisureRealm.creatAt = leisure.createdAt;
+                        leisureRealm.desc = leisure.desc;
+                        leisureRealm.publishedAt = leisure.publishedAt;
+                        leisureRealm.source = leisure.source;
+                        leisureRealm.type = leisure.type;
+                        leisureRealm.url = leisure.url;
+                        leisureRealm.used = leisure.used;
+                        leisureRealm.author = leisure.who;
+                        realm.copyToRealmOrUpdate(leisureRealm);
                     }
                 });
             }
@@ -206,26 +205,26 @@ public class ModelToday {
             public boolean used;
             public String who;
 
-            public void toRealmItemGift(福利Bean gift, Realm realm) {
-                ModelArticleRealm giftRealm = realm.where(ModelArticleRealm.class).equalTo("id", gift._id).findFirst();
-                if (giftRealm == null) {
-                    giftRealm = new ModelArticleRealm();
-                    giftRealm.id = gift._id;
-                }
-                giftRealm.creatAt = gift.createdAt;
-                giftRealm.desc = gift.desc;
-                giftRealm.publishedAt = gift.publishedAt;
-                giftRealm.source = gift.source;
-                giftRealm.type = gift.type;
-                giftRealm.url = gift.url;
-                giftRealm.used = gift.used;
-                giftRealm.author = gift.who;
+            public void toRealmItemGift(final 福利Bean gift, Realm realm) {
 
-                final ModelArticleRealm finalGiftRealm = giftRealm;
+
                 realm.executeTransactionAsync(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        realm.copyToRealmOrUpdate(finalGiftRealm);
+                        ModelArticleRealm giftRealm = realm.where(ModelArticleRealm.class).equalTo("id", gift._id).findFirst();
+                        if (giftRealm == null) {
+                            giftRealm = new ModelArticleRealm();
+                            giftRealm.id = gift._id;
+                        }
+                        giftRealm.creatAt = gift.createdAt;
+                        giftRealm.desc = gift.desc;
+                        giftRealm.publishedAt = gift.publishedAt;
+                        giftRealm.source = gift.source;
+                        giftRealm.type = gift.type;
+                        giftRealm.url = gift.url;
+                        giftRealm.used = gift.used;
+                        giftRealm.author = gift.who;
+                        realm.copyToRealmOrUpdate(giftRealm);
                     }
                 });
             }
