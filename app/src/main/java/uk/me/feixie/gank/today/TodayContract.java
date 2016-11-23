@@ -31,6 +31,8 @@ public interface TodayContract {
 
     interface Presenter extends BasePresenter {
 
+        void initArticalsLocal(Realm realm);
+
         void loadArticles(Realm realm);
 
         void loadArticalDetails(@NonNull ModelArticleRealm article);

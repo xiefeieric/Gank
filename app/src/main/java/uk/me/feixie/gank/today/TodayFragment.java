@@ -30,9 +30,11 @@ public class TodayFragment extends Fragment implements TodayContract.View {
 
     @BindView(R.id.rvToday)
     UltimateRecyclerView mRvToday;
+
     private TodayContract.Presenter mPresenter;
     private Realm mRealm;
     private Unbinder mBind;
+    private TodayAdapter mAdapter;
 
     public TodayFragment() {
         // Required empty public constructor
@@ -46,7 +48,7 @@ public class TodayFragment extends Fragment implements TodayContract.View {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mRealm = Realm.getDefaultInstance();
-        mPresenter.loadArticles(mRealm);
+//        mPresenter.loadArticles(mRealm);
     }
 
     @Override
@@ -69,7 +71,15 @@ public class TodayFragment extends Fragment implements TodayContract.View {
         Timber.d("data size: %d", size);
         View view = inflater.inflate(R.layout.fragment_today, container, false);
         mBind = ButterKnife.bind(this, view);
+        initView();
         return view;
+    }
+
+    private void initView() {
+        mRvToday.setHasFixedSize(true);
+        mRvToday.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRvToday.setEmptyView(R.layout.view_empty, 0);
+        mPresenter.initArticalsLocal(mRealm);
     }
 
     @Override
@@ -91,11 +101,12 @@ public class TodayFragment extends Fragment implements TodayContract.View {
 
     @Override
     public void showArticles(List<ModelArticleRealm> articles) {
-        mRvToday.setHasFixedSize(true);
-        mRvToday.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRvToday.setEmptyView(R.layout.view_empty, 0);
-        TodayAdapter adapter = new TodayAdapter(articles);
-        mRvToday.setAdapter(adapter);
+        if (mAdapter==null) {
+            mAdapter = new TodayAdapter(articles);
+            mRvToday.setAdapter(mAdapter);
+        } else {
+            mAdapter.updateData(articles);
+        }
     }
 
     @Override

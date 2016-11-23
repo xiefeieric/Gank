@@ -28,6 +28,7 @@ public class ModelToday {
         public List<IOSBean> iOS;
         public List<休息视频Bean> 休息视频;
         public List<福利Bean> 福利;
+        public List<拓展资源Bean> 拓展资源;
 
 
         public class AndroidBean {
@@ -130,6 +131,54 @@ public class ModelToday {
                             iosRealm.imagePath = ios.images.get(0);
                         }
                         realm.copyToRealmOrUpdate(iosRealm);
+                    }
+                });
+            }
+        }
+
+        public class 拓展资源Bean {
+            /**
+             * "_id": "5833ee27421aa926e6fa8396",
+             * "createdAt": "2016-11-22T15:05:11.688Z",
+             * "desc": "itCoder WeeklyBlog 第六期（Android：沉浸式适配、Retrofit 2.0 应用 、Android 单元测试-Mock及Mockito 、自定义选择复制功能、RxJava 学习笔记（部分示例代码及源码）、使用贝塞尔曲线实现仿 QQ “一键下班”；C/C++：Linux 下用 Clion 编写及调用共享库 ；Python：Python 描述符入门指北、Atom-Helper 小脚本；面向对象：面向对象六大原则和设计模式。）",
+             * "publishedAt": "2016-11-23T11:27:52.847Z",
+             * "source": "web",
+             * "type": "拓展资源",
+             * "url": "http://itscoder.com/weeklyblog-phase-6/",
+             * "used": true,
+             * "who": null
+             */
+
+            public String _id;
+            public String createdAt;
+            public String desc;
+            public String publishedAt;
+            public String source;
+            public String type;
+            public String url;
+            public boolean used;
+            public String who;
+
+            public void toRealmItemSource(final 拓展资源Bean source, Realm realm) {
+
+                realm.executeTransactionAsync(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        ModelArticleRealm sourceRealm = realm.where(ModelArticleRealm.class).equalTo("id", source._id).findFirst();
+                        if (sourceRealm == null) {
+                            sourceRealm = new ModelArticleRealm();
+                            sourceRealm.id = source._id;
+                        }
+                        sourceRealm.creatAt = source.createdAt;
+                        sourceRealm.desc = source.desc;
+                        sourceRealm.publishedAt = source.publishedAt;
+                        sourceRealm.source = source.source;
+                        sourceRealm.type = source.type;
+                        sourceRealm.url = source.url;
+                        sourceRealm.used = source.used;
+                        sourceRealm.author = source.who;
+
+                        realm.copyToRealmOrUpdate(sourceRealm);
                     }
                 });
             }

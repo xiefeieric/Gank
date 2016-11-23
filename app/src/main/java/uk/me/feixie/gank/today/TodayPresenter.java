@@ -33,6 +33,17 @@ public class TodayPresenter implements TodayContract.Presenter {
     }
 
     @Override
+    public void initArticalsLocal(Realm realm) {
+//        2016-11-23
+        RealmResults<ModelArticleRealm> todayArticles = realm.where(ModelArticleRealm.class).beginsWith("publishedAt", DateUtils.formatDate("yyyy-MM-dd", new DateTime())).findAllSorted("type");
+        if (todayArticles.size()==0) {
+            loadArticles(realm);
+        }
+//        Timber.d("all articles: %d", allArticles.size());
+        mView.showArticles(todayArticles);
+    }
+
+    @Override
     public void loadArticles(final Realm realm) {
         String date = DateUtils.formatDate("yyyy/MM/dd", new DateTime());
         Timber.d(date);
@@ -43,9 +54,6 @@ public class TodayPresenter implements TodayContract.Presenter {
                     @Override
                     public void onCompleted() {
                         Timber.d("onCompleted");
-                        RealmResults<ModelArticleRealm> allArticles = realm.where(ModelArticleRealm.class).findAll();
-                        Timber.d("all articles: %d", allArticles.size());
-                        mView.showArticles(allArticles);
                     }
 
                     @Override
@@ -68,7 +76,14 @@ public class TodayPresenter implements TodayContract.Presenter {
                         for (ModelToday.ResultsBean.福利Bean gift : modelToday.results.福利) {
                             gift.toRealmItemGift(gift, realm);
                         }
-
+                        if (modelToday.results.拓展资源!=null) {
+                            for (ModelToday.ResultsBean.拓展资源Bean source : modelToday.results.拓展资源) {
+                                source.toRealmItemSource(source, realm);
+                            }
+                        }
+                        RealmResults<ModelArticleRealm> allArticles = realm.where(ModelArticleRealm.class).beginsWith("publishedAt", DateUtils.formatDate("yyyy-MM-dd", new DateTime())).findAllSorted("type");
+                        Timber.d("all articles: %d", allArticles.size());
+                        mView.showArticles(allArticles);
                     }
                 });
         mSubscription.add(subscription);
@@ -93,5 +108,6 @@ public class TodayPresenter implements TodayContract.Presenter {
     public void unsubscribe() {
         mSubscription.clear();
         mSubscription.unsubscribe();
+        mView = null;
     }
 }
