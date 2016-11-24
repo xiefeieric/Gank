@@ -45,6 +45,7 @@ public class TodayPresenter implements TodayContract.Presenter {
 
     @Override
     public void loadArticles(final Realm realm) {
+        mView.setLoadingIndicator(true);
         String date = DateUtils.formatDate("yyyy/MM/dd", new DateTime());
         Timber.d(date);
         Subscription subscription = GankApiService.getApiInstance().getTodayArticals(date)
@@ -84,6 +85,7 @@ public class TodayPresenter implements TodayContract.Presenter {
                         RealmResults<ModelArticleRealm> allArticles = realm.where(ModelArticleRealm.class).beginsWith("publishedAt", DateUtils.formatDate("yyyy-MM-dd", new DateTime())).findAllSorted("type");
                         Timber.d("all articles: %d", allArticles.size());
                         mView.showArticles(allArticles);
+                        mView.setLoadingIndicator(false);
                     }
                 });
         mSubscription.add(subscription);

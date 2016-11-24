@@ -9,8 +9,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.marshalchen.ultimaterecyclerview.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
 import java.util.List;
 
@@ -30,6 +32,8 @@ public class TodayFragment extends Fragment implements TodayContract.View {
 
     @BindView(R.id.rvToday)
     UltimateRecyclerView mRvToday;
+    @BindView(R.id.pbTodayLoading)
+    ProgressBar mPbTodayLoading;
 
     private TodayContract.Presenter mPresenter;
     private Realm mRealm;
@@ -80,6 +84,8 @@ public class TodayFragment extends Fragment implements TodayContract.View {
         mRvToday.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRvToday.setEmptyView(R.layout.view_empty, 0);
         mPresenter.initArticalsLocal(mRealm);
+        StickyRecyclerHeadersDecoration header = new StickyRecyclerHeadersDecoration(mAdapter);
+        mRvToday.addItemDecoration(header);
     }
 
     @Override
@@ -96,12 +102,16 @@ public class TodayFragment extends Fragment implements TodayContract.View {
 
     @Override
     public void setLoadingIndicator(boolean active) {
-
+        if (active) {
+            mPbTodayLoading.setVisibility(View.VISIBLE);
+        } else {
+            mPbTodayLoading.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void showArticles(List<ModelArticleRealm> articles) {
-        if (mAdapter==null) {
+        if (mAdapter == null) {
             mAdapter = new TodayAdapter(articles);
             mRvToday.setAdapter(mAdapter);
         } else {
