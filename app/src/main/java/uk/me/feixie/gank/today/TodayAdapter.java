@@ -78,7 +78,9 @@ public class TodayAdapter extends UltimateViewAdapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((TodayViewHolder) holder).mTvArticleTitle.setText(mArticles.get(position).desc);
+//        if (position < getItemCount() && (customHeaderView != null ? position <= mArticles.size() : position < mArticles.size()) && (customHeaderView == null || position > 0)) {
+            ((TodayViewHolder) holder).mTvArticleTitle.setText(mArticles.get(position).desc);
+//        }
     }
 
     @Override
@@ -112,7 +114,7 @@ public class TodayAdapter extends UltimateViewAdapter {
             mCvArticle = (CardView) itemView.findViewById(R.id.cvArticle);
 
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-            params.setMargins(5, 5, 5, 5);
+            params.setMargins(0, 5, 0, 5);
             mCvArticle.setLayoutParams(params);
         }
     }

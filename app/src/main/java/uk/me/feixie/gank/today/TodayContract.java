@@ -21,6 +21,8 @@ public interface TodayContract {
 
         void showArticles(List<ModelArticleRealm> articles);
 
+        void showHeaderImage(String path);
+
         void showArticleDetailUi(@NonNull String articleId);
 
         void showNoArticles();

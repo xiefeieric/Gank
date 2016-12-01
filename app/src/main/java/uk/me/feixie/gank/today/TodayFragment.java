@@ -9,8 +9,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.bumptech.glide.Glide;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
@@ -39,6 +41,7 @@ public class TodayFragment extends Fragment implements TodayContract.View {
     private Realm mRealm;
     private Unbinder mBind;
     private TodayAdapter mAdapter;
+    private ImageView mIvParallaxHeader;
 
     public TodayFragment() {
         // Required empty public constructor
@@ -80,7 +83,8 @@ public class TodayFragment extends Fragment implements TodayContract.View {
     }
 
     private void initView() {
-        mRvToday.setHasFixedSize(true);
+        mIvParallaxHeader = (ImageView) getActivity().findViewById(R.id.ivParallaxHeader);
+        mRvToday.setHasFixedSize(false);
         mRvToday.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRvToday.setEmptyView(R.layout.view_empty, 0);
         mPresenter.initArticalsLocal(mRealm);
@@ -117,6 +121,11 @@ public class TodayFragment extends Fragment implements TodayContract.View {
         } else {
             mAdapter.updateData(articles);
         }
+    }
+
+    @Override
+    public void showHeaderImage(String path) {
+        Glide.with(this).load(path).into(mIvParallaxHeader);
     }
 
     @Override
