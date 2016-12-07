@@ -116,7 +116,7 @@ public class TodayFragment extends Fragment implements TodayContract.View {
     @Override
     public void showArticles(List<ModelArticleRealm> articles) {
         if (mAdapter == null) {
-            mAdapter = new TodayAdapter(articles);
+            mAdapter = new TodayAdapter(getActivity(), articles);
             mRvToday.setAdapter(mAdapter);
         } else {
             mAdapter.updateData(articles);

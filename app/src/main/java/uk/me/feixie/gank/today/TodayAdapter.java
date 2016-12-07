@@ -1,5 +1,7 @@
 package uk.me.feixie.gank.today;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
@@ -13,6 +15,7 @@ import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 import java.util.List;
 
 import uk.me.feixie.gank.R;
+import uk.me.feixie.gank.artical_detail.DetailViewActivity;
 import uk.me.feixie.gank.data.local.ModelArticleRealm;
 
 /**
@@ -21,12 +24,15 @@ import uk.me.feixie.gank.data.local.ModelArticleRealm;
 
 public class TodayAdapter extends UltimateViewAdapter {
 
+    public static final String ARTICAL_URL = "artical_url";
     private List<ModelArticleRealm> mArticles;
     private SparseArray<String> mHeadCharTable;
+    private Context mContext;
 
-    public TodayAdapter(List<ModelArticleRealm> articles) {
+    public TodayAdapter(Context context, List<ModelArticleRealm> articles) {
         mArticles = articles;
         mHeadCharTable = new SparseArray<>();
+        mContext = context;
     }
 
     @Override
@@ -78,9 +84,7 @@ public class TodayAdapter extends UltimateViewAdapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-//        if (position < getItemCount() && (customHeaderView != null ? position <= mArticles.size() : position < mArticles.size()) && (customHeaderView == null || position > 0)) {
-            ((TodayViewHolder) holder).mTvArticleTitle.setText(mArticles.get(position).desc);
-//        }
+        ((TodayViewHolder) holder).mTvArticleTitle.setText(mArticles.get(position).desc);
     }
 
     @Override
@@ -91,7 +95,7 @@ public class TodayAdapter extends UltimateViewAdapter {
 
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((HeadViewHolder)holder).mTvTodayStickyHead.setText(mHeadCharTable.get(position));
+        ((HeadViewHolder) holder).mTvTodayStickyHead.setText(mHeadCharTable.get(position));
     }
 
     public void setArticles(List<ModelArticleRealm> articles) {
@@ -103,7 +107,7 @@ public class TodayAdapter extends UltimateViewAdapter {
         notifyDataSetChanged();
     }
 
-    public class TodayViewHolder extends RecyclerView.ViewHolder {
+    public class TodayViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView mTvArticleTitle;
         public CardView mCvArticle;
@@ -116,6 +120,15 @@ public class TodayAdapter extends UltimateViewAdapter {
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
             params.setMargins(0, 5, 0, 5);
             mCvArticle.setLayoutParams(params);
+            mCvArticle.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+//            Timber.d("click %d", getAdapterPosition());
+            Intent i = new Intent(mContext, DetailViewActivity.class);
+            i.putExtra(ARTICAL_URL, mArticles.get(getAdapterPosition()).url);
+            mContext.startActivity(i);
         }
     }
 

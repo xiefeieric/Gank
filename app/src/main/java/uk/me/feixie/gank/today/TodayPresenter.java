@@ -36,12 +36,14 @@ public class TodayPresenter implements TodayContract.Presenter {
     @Override
     public void initArticalsLocal(Realm realm) {
 //        2016-11-23
-        RealmResults<ModelArticleRealm> todayArticles = realm.where(ModelArticleRealm.class).beginsWith("publishedAt", DateUtils.formatDate("yyyy-MM-dd", new DateTime())).notEqualTo("type","福利").findAllSorted("type");
-        if (todayArticles.size()==0) {
+        RealmResults<ModelArticleRealm> todayArticles = realm.where(ModelArticleRealm.class)
+                .beginsWith("publishedAt", DateUtils.formatDate("yyyy-MM-dd", new DateTime()))
+                .notEqualTo("type", "福利").findAllSorted("type");
+        if (todayArticles.size() == 0) {
             loadArticles(realm);
         }
         ModelArticleRealm article = realm.where(ModelArticleRealm.class)
-                .equalTo("type","福利").findAllSorted("publishedAt", Sort.DESCENDING)
+                .equalTo("type", "福利").findAllSorted("publishedAt", Sort.DESCENDING)
                 .first();
         mView.showHeaderImage(article.url);
 //        Timber.d("all articles: %d", allArticles.size());
@@ -60,8 +62,9 @@ public class TodayPresenter implements TodayContract.Presenter {
                     @Override
                     public void onCompleted() {
                         Timber.d("onCompleted");
-                        RealmResults<ModelArticleRealm> allArticles = realm.where(ModelArticleRealm.class).beginsWith("publishedAt", DateUtils.formatDate("yyyy-MM-dd", new DateTime())).findAllSorted("type");
-                        mView.showArticles(allArticles);
+//                        RealmResults<ModelArticleRealm> allArticles = realm.where(ModelArticleRealm.class).beginsWith("publishedAt", DateUtils.formatDate("yyyy-MM-dd", new DateTime())).findAllSorted("type");
+//                        mView.showArticles(allArticles);
+                        mView.setLoadingIndicator(false);
                     }
 
                     @Override
@@ -85,19 +88,19 @@ public class TodayPresenter implements TodayContract.Presenter {
                         for (ModelToday.ResultsBean.福利Bean gift : modelToday.results.福利) {
                             gift.toRealmItemGift(gift, realm);
                         }
-                        if (modelToday.results.拓展资源!=null) {
+                        if (modelToday.results.拓展资源 != null) {
                             for (ModelToday.ResultsBean.拓展资源Bean source : modelToday.results.拓展资源) {
                                 source.toRealmItemSource(source, realm);
                             }
                         }
                         RealmResults<ModelArticleRealm> allArticles = realm.where(ModelArticleRealm.class)
                                 .beginsWith("publishedAt", DateUtils.formatDate("yyyy-MM-dd", new DateTime()))
-                                .notEqualTo("type","福利").findAllSorted("type");
+                                .notEqualTo("type", "福利").findAllSorted("type");
 
                         mView.showArticles(allArticles);
 
                         ModelArticleRealm article = realm.where(ModelArticleRealm.class)
-                                .equalTo("type","福利").findAllSorted("publishedAt", Sort.DESCENDING)
+                                .equalTo("type", "福利").findAllSorted("publishedAt", Sort.DESCENDING)
                                 .first();
 
                         Timber.d("url: %s", article.url);
@@ -105,7 +108,7 @@ public class TodayPresenter implements TodayContract.Presenter {
                         mView.showHeaderImage(article.url);
 
                         Timber.d("all articles: %d", allArticles.size());
-                        mView.setLoadingIndicator(false);
+//                        mView.setLoadingIndicator(false);
                     }
                 });
         mSubscription.add(subscription);
